@@ -23,7 +23,7 @@ public class DictionaryScreen extends JFrame implements ActionListener, TableMod
     JButton B_back;
     JTable table;
     Slang slag_word;
-    String data[][] = null;
+    String data_copy[][];
 
     public DictionaryScreen() throws Exception {
         Container contain = this.getContentPane();
@@ -45,15 +45,17 @@ public class DictionaryScreen extends JFrame implements ActionListener, TableMod
         // make list slang words
         JPanel slag_table = new JPanel();
         slag_table.setBackground(Color.black);
-        //String data[][] = Slang.get_Data();
+        String data[][]= Slang.getInstance().get_Data();
+        data_copy=Slang.getInstance().get_Data();
         String column[] = { "STT", "Slag", "Meaning" };
         table = new JTable(data, column);
         table.setRowHeight(25);
+        table.setEnabled(false);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        table.getColumnModel().getColumn(0).setPreferredWidth(30);
 
         table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -63,7 +65,7 @@ public class DictionaryScreen extends JFrame implements ActionListener, TableMod
         table.getModel().addTableModelListener(this);
 
         //count number of slag word
-        //dic_label.setText("Number of slang words: " + data.length);
+        dic_label.setText("Number of slang words: " + data.length);
 
         // make scoll button
         JScrollPane sb = new JScrollPane(table);
@@ -84,8 +86,8 @@ public class DictionaryScreen extends JFrame implements ActionListener, TableMod
         contain.add(title);
         contain.add(Box.createRigidArea(new Dimension(0,20)));
         contain.add(dic_label);
-        //contain.add(Box.createRigidArea(new Dimension(0,20)));
-        //contain.add(slag_table);
+        contain.add(Box.createRigidArea(new Dimension(0,20)));
+        contain.add(slag_table);
         contain.add(Box.createRigidArea(new Dimension(0,20)));
         contain.add(bottom_panel);
 

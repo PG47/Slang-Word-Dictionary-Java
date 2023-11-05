@@ -70,4 +70,29 @@ public class Slang {
         }
         scan.close();
     }
+
+    public String[][] get_Data() {
+        String list[][] = new String[size_map][3];
+        Set<String> slang_list_set = map.keySet();
+        Object[] slang_list = slang_list_set.toArray();
+        int index =0;
+        int i=0;
+        while(i < size_map) {
+            list[i][0]= String.valueOf(i);
+            list[i][1]= (String) slang_list[index];
+            List<String> meanings = map.get(slang_list[index]);
+            list[i][2]= meanings.get(0);
+
+            //if a slang word has more than 1 mean
+            for(int j=1;j<meanings.size(); j++) {
+                i++;
+                list[i][0] = String.valueOf(i);
+                list[i][1] = (String) slang_list[index];
+                list[i][2] = meanings.get(j);
+            }
+            index++;
+            i++;
+        }
+        return list;
+    }
 }
