@@ -71,7 +71,7 @@ public class MenuScreen extends JFrame implements ActionListener {
 
         // Panel for Button
         JPanel panelCenter = new JPanel();
-        panelCenter.setLayout(new GridLayout(4, 2, 10, 10));
+        panelCenter.setLayout(new GridLayout(4, 2, 8, 8));
         panelCenter.add(b1);
         panelCenter.add(b2);
         panelCenter.add(b3);
@@ -81,7 +81,7 @@ public class MenuScreen extends JFrame implements ActionListener {
         panelCenter.add(b7);
         panelCenter.add(b8);
 
-        Dimension size2 = new Dimension(600, 500);
+        Dimension size2 = new Dimension(500, 450);
         panelCenter.setMaximumSize(size2);
         panelCenter.setPreferredSize(size2);
         panelCenter.setMinimumSize(size2);
@@ -89,14 +89,14 @@ public class MenuScreen extends JFrame implements ActionListener {
         con.setLayout(new BoxLayout(con, BoxLayout.Y_AXIS));
         con.add(Box.createRigidArea(new Dimension(0, 10)));
         con.add(label);
-        con.add(Box.createRigidArea(new Dimension(0, 30)));
+        con.add(Box.createRigidArea(new Dimension(0, 20)));
         con.add(panelCenter);
 
         // Set Frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Menu Screen");
         this.setVisible(true);
-        this.setSize(700, 700);
+        this.setSize(600, 600);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
