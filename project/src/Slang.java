@@ -13,8 +13,8 @@ public class Slang {
     private TreeMap<String, List<String>> map = new TreeMap<>();
     private static Slang obj = new Slang();
     private int size_map;
-    private String FILE="slangword.txt";
-    private String ORIGINAL_FILE = "original-slangword.txt";
+    private String FILE="slang.txt";
+    private String ORIGINAL_FILE = "original-slang.txt";
 
     private Slang() {
         try {
@@ -22,6 +22,17 @@ public class Slang {
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static Slang getInstance() {
+        if (obj == null) {
+            synchronized (Slang.class) {
+                if (obj == null) {
+                    obj = new Slang();
+                }
+            }
+        }
+        return obj;
     }
 
     void ReadFile(String file_name) throws Exception {
@@ -51,6 +62,7 @@ public class Slang {
                 Collections.addAll(meaning, d);
                 size_map += d.length - 1;
             } else {
+                System.out.println(part[0]);
                 meaning.add(part[0]);
             }
             map.put(slag, meaning);

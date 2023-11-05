@@ -8,7 +8,7 @@ $_$`Has money
 ><`Frustration
 >,<`Angry| annoyed
 >.>`Suspicious| wary
->.<`Frustrated| angry| upset| in pain
+>.<`Frustrated| angry| upset| in painu
 >//<`Embarrassed| blushing
 >3`Evil but happy|Hate
 >:(`Angry

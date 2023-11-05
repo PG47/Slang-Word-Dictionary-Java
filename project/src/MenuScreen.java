@@ -19,13 +19,14 @@ import static java.awt.SystemColor.text;
 
 public class MenuScreen extends JFrame implements ActionListener {
     JButton b1, b2, b3, b4, b5, b6, b7, b8;
+    Slang slag_word;
 
     MenuScreen() {
-
+        slag_word = Slang.getInstance();
         // Label
-        JLabel label = new JLabel("Slang Words Dictionary");
+        JLabel label = new JLabel("Slang Program");
         label.setForeground(Color.red);
-        label.setFont(new Font("Gill Sans MT", Font.PLAIN, 35));
+        label.setFont(new Font("Gill Sans MT", Font.PLAIN, 30));
         label.setAlignmentX(CENTER_ALIGNMENT);
 
         //8 button for menu options
@@ -104,6 +105,13 @@ public class MenuScreen extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource() == b1) {
+            this.dispose();
+            try {
+                new DictionaryScreen();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 }
