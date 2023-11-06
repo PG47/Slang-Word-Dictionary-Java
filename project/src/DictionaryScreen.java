@@ -22,12 +22,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class DictionaryScreen extends JFrame implements ActionListener, TableModelListener {
     JButton B_back;
     JTable table;
-    Slang slag_word;
+    Slang slang_word;
     String data_copy[][];
 
     public DictionaryScreen() throws Exception {
         Container contain = this.getContentPane();
-        slag_word = Slang.getInstance();
+        slang_word = Slang.getInstance();
 
         //make title
         JLabel title = new JLabel();
@@ -47,10 +47,11 @@ public class DictionaryScreen extends JFrame implements ActionListener, TableMod
         slag_table.setBackground(Color.black);
         String data[][]= Slang.getInstance().get_Data();
         data_copy=Slang.getInstance().get_Data();
-        String column[] = { "STT", "Slag", "Meaning" };
-        table = new JTable(data, column);
+        String header_column[] = { "STT", "Slag", "Meaning" };
+        table = new JTable(data, header_column);
         table.setRowHeight(25);
         table.setEnabled(false);
+        table.getTableHeader().setReorderingAllowed(false);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -67,10 +68,10 @@ public class DictionaryScreen extends JFrame implements ActionListener, TableMod
         //count number of slag word
         dic_label.setText("Number of slang words: " + data.length);
 
-        // make scoll button
-        JScrollPane sb = new JScrollPane(table);
+        // make scoll panel
+        JScrollPane scroll = new JScrollPane(table);
         slag_table.setLayout(new BoxLayout(slag_table, BoxLayout.X_AXIS));
-        slag_table.add(sb);
+        slag_table.add(scroll);
 
         // make Back button
         JPanel bottom_panel = new JPanel();
@@ -125,7 +126,7 @@ public class DictionaryScreen extends JFrame implements ActionListener, TableMod
             // edit meaning
             System.out.println("Old SlangWord: \t" + row + "\t" + data[row][2]);
             System.out.println("Old SlangWord: \t" + row + "\t" + data[row][2]);
-        }slag_word.set((String) table.getValueAt(row, 1), data[row][2], (String) table.getValueAt(row, 2));
+        }slang_word.set((String) table.getValueAt(row, 1), data[row][2], (String) table.getValueAt(row, 2));
         JOptionPane.showMessageDialog(this, "Updated a row.");
     } */
 }

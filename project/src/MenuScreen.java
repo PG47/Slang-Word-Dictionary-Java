@@ -19,10 +19,9 @@ import static java.awt.SystemColor.text;
 
 public class MenuScreen extends JFrame implements ActionListener {
     JButton b1, b2, b3, b4, b5, b6, b7, b8;
-    Slang slag_word;
+
 
     MenuScreen() {
-        slag_word = Slang.getInstance();
         // Label
         JLabel label = new JLabel("Slang Program");
         label.setForeground(Color.red);
@@ -109,6 +108,14 @@ public class MenuScreen extends JFrame implements ActionListener {
             this.dispose();
             try {
                 new DictionaryScreen();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+        if(e.getSource() == b2) {
+            this.dispose();
+            try {
+                new SearchScreen();
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
