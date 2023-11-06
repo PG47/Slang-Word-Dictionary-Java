@@ -95,4 +95,41 @@ public class Slang {
         }
         return list;
     }
+
+    public String[][] Search_by_Slang(String key) {
+        List<String> search_result = map.get(key);
+        if(search_result == null) {
+            return null;
+        }
+        int size = search_result.size();
+        String list[][] = new String[size][2];
+        for(int i=0;i<size;i++) {
+            list[i][0]=key;
+            list[i][1]=search_result.get(i);
+        }
+        return list;
+    }
+
+    public String[][] Search_by_Definition(String key) {
+        List<String> key_list = new ArrayList<>();
+        List<String> defin_list = new ArrayList<>();
+        for(Entry<String, List<String>> entry:map.entrySet()) {
+            List<String> definitions = entry.getValue();
+            for(int i=0;i<definitions.size();i++) {
+                if (definitions.get(i).toLowerCase().contains(key.toLowerCase())) {
+                    key_list.add(entry.getKey());
+                    defin_list.add(definitions.get(i));
+                }
+            }
+        }
+        //rather all the slang found into a result list
+        int size = key_list.size();
+        String result[][] = new String[size][2];
+
+        for (int i=0;i<size; i++) {
+            result[i][0]=key_list.get(i);
+            result[i][1]=defin_list.get(i);
+        }
+        return result;
+    }
 }

@@ -33,7 +33,6 @@ public class SearchScreen extends JFrame implements ActionListener {
     Slang slang_word;
     String[][] result_list;
 
-    DefaultTableModel model;
     SearchScreen() throws Exception {
         Container contain = this.getContentPane();
         slang_word = Slang.getInstance();
@@ -130,14 +129,53 @@ public class SearchScreen extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //go back to the menu screen
+        if (e.getSource() == B_back) {
+            this.dispose();
+            new MenuScreen();
+        }
 
+        if (e.getSource() == B_search) {
+            long run_time=0;
+            String key = text_field.getText();
+            if (key.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Keyword can not empty!", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Object[] options = { "Search by slang word", "Search by slang definition"};
+            int choice = JOptionPane.showOptionDialog(this, "Select type of search", "Search type?",
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
+            String[][] result  = null;
+            if (choice ==0) { //Search slang word
+                this.clearTable();
+                long start_time = System.currentTimeMillis();
+                result=slang_word.Search_by_Slang(key);
+                long end_time = System.currentTimeMillis();
+                run_time = end_time - start_time;
+            }
+            if (choice ==1) { //Search slang word by definition
+                this.clearTable();
+                long start_time = System.currentTimeMillis();
+                result=slang_word.Search_by_Definition(key);
+                long end_time = System.currentTimeMillis();
+                run_time = end_time - start_time;
+            }
+            if(result!=null) {//found slang words you want
+                info_label.setText("Running time:"+String.valueOf(run_time)+" ms");
+                DefaultTableModel model = (DefaultTableModel) result_table.getModel();
+                for (int i = 0; i < result.length; i++) {
+                    String ss[] = result[i];
+                    model.addRow(ss);
+                }
+            }
+            else JOptionPane.showMessageDialog(this, "Can't find the slang you want", "NO RESULT", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     //Clear the result table if we searching again
     void clearTable() {
-        int num_row = model.getRowCount();
-        for (int i = num_row - 1; i >= 0; i--) {
-            model.removeRow(i);
-        }
+        DefaultTableModel model = (DefaultTableModel) result_table.getModel();
+        model.setRowCount(0);
     }
 }
