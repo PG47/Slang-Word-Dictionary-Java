@@ -254,4 +254,23 @@ public class Slang {
         map.put(slang,defin_list);
         this.SaveFile(FILE);
     }
+
+    public String[] Random() {
+        int random_number = Random_Num(0,map.size()-1);
+        String random_slang[] = new String[2];
+        int index = 0;
+        for (String slang:map.keySet()) {
+            if(index==random_number) {
+                random_slang[0] = slang;
+                random_slang[1] = map.get(slang).get(0);
+                return  random_slang;
+            }
+            index++;
+        }
+        return null;
+    }
+
+    public static int Random_Num(int minimum, int maximum) {
+        return (minimum + (int) (Math.random() * maximum));
+    }
 }

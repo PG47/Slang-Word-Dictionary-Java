@@ -7632,6 +7632,7 @@ ZZZ`Sleepy| bored| tired
 ^_^`Happiness| satisfied
 ^_~`Wink
 ^~^`Mischievous Smile
+nsfw`not safe for work
 |O|`LOL
 }:-)`Devilish smile
 ~`Denotes Sarcasm| Put At The End Of A Word To Make It Longer

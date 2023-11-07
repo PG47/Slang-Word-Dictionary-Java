@@ -136,5 +136,14 @@ public class MenuScreen extends JFrame implements ActionListener {
                 e1.printStackTrace();
             }
         }
+
+        if(e.getSource() == b7) {
+            this.dispose();
+            try {
+                new RandomScreen();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 }
