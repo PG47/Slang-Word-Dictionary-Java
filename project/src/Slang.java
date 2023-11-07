@@ -76,6 +76,34 @@ public class Slang {
         scan.close();
     }
 
+    void SaveFile(String file_name) {
+        try {
+            PrintWriter pw = new PrintWriter(new File(file_name));
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("Slag`Meaning\n");
+            String s[][] = new String[map.size()][3];
+            Set<String> keySet = map.keySet();
+            Object[] keyArray = keySet.toArray();
+            for (int i = 0; i < map.size(); i++) {
+                Integer in = i + 1;
+                s[i][0] = in.toString();
+                s[i][1] = (String) keyArray[i];
+                List<String> meaning = map.get(keyArray[i]);
+                sb.append(s[i][1] + "`" + meaning.get(0));
+                for (int j = 1; j < meaning.size(); j++) {
+                    sb.append("|" + meaning.get(j));
+                }
+                sb.append("\n");
+            }
+            pw.write(sb.toString());
+            pw.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public String[][] get_Data() {
         String list[][] = new String[size_map][3];
         Set<String> slang_list_set = map.keySet();
@@ -187,12 +215,43 @@ public class Slang {
         return  result;
     }
 
-    public  int Clear_History() {
+    public int Clear_History() {
         File f = new File(HISTORY_FILE);
         if(f.exists()) {
             if(f.delete()) {
                 return 0;
             } else return 1;
         } else return 2;
+    }
+
+    public boolean Check_Slang(String key) {
+        for (String keyIro : map.keySet()) {
+            if (keyIro.equals(key))
+                return true;
+        }
+        return false;
+    }
+
+    public void Add_New(String slang, String definition) {
+        List<String> defin_list = new ArrayList<>();
+        defin_list.add(definition);
+        size_map++;
+        map.put(slang,defin_list);
+        this.SaveFile(FILE);
+    }
+
+    public void Overwrite(String slang, String definition) {
+        List<String> defin_list = map.get(slang);
+        defin_list.set(0,definition);
+        map.put(slang,defin_list);
+        this.SaveFile(FILE);
+    }
+
+    public void Duplicate(String slang, String definition) {
+        List<String> defin_list = map.get(slang);
+        defin_list.add(definition);
+        size_map++;
+        map.put(slang,defin_list);
+        this.SaveFile(FILE);
     }
 }

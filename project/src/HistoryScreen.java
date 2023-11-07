@@ -18,6 +18,8 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
 
 public class HistoryScreen extends JFrame implements ActionListener{
     JButton B_back;
@@ -38,11 +40,11 @@ public class HistoryScreen extends JFrame implements ActionListener{
 
 
         // make list slang words
-        JPanel slag_table = new JPanel();
-        slag_table.setBackground(Color.black);
+        JPanel slang_table = new JPanel();
+        slang_table.setBackground(Color.black);
         String data[][]= Slang.getInstance().Read_History();
         String header_column[] = { "Date", "Slag", "Meaning" };
-        table = new JTable(data, header_column);
+        table = new JTable(new DefaultTableModel(data, header_column));
         table.setRowHeight(25);
         table.setEnabled(false);
         table.getTableHeader().setReorderingAllowed(false);
@@ -61,8 +63,8 @@ public class HistoryScreen extends JFrame implements ActionListener{
 
         // make scoll panel
         JScrollPane scroll = new JScrollPane(table);
-        slag_table.setLayout(new BoxLayout(slag_table, BoxLayout.X_AXIS));
-        slag_table.add(scroll);
+        slang_table.setLayout(new BoxLayout(slang_table, BoxLayout.X_AXIS));
+        slang_table.add(scroll);
 
         JPanel bottom_panel = new JPanel();
         // make Back button
@@ -83,7 +85,7 @@ public class HistoryScreen extends JFrame implements ActionListener{
         contain.add(Box.createRigidArea(new Dimension(0,10)));
         contain.add(title);
         contain.add(Box.createRigidArea(new Dimension(0,20)));
-        contain.add(slag_table);
+        contain.add(slang_table);
         contain.add(Box.createRigidArea(new Dimension(0,20)));
         contain.add(bottom_panel);
 
@@ -106,8 +108,11 @@ public class HistoryScreen extends JFrame implements ActionListener{
         }
         if (e.getSource() == B_clear) {
             int res = slang_word.Clear_History();
-            if (res == 0)
+            if (res == 0) {
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                model.setRowCount(0);
                 JOptionPane.showMessageDialog(this, "Search-history file had been deleted", "CLEAR!", JOptionPane.PLAIN_MESSAGE);
+            }
             if (res == 1)
                 JOptionPane.showMessageDialog(this, "Can't delete search history file", "ERROR!", JOptionPane.ERROR_MESSAGE);
             if (res == 2)

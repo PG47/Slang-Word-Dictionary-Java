@@ -19,7 +19,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class DictionaryScreen extends JFrame implements ActionListener, TableModelListener {
+public class DictionaryScreen extends JFrame implements ActionListener{
     JButton B_back;
     JTable table;
     Slang slang_word;
@@ -61,7 +61,6 @@ public class DictionaryScreen extends JFrame implements ActionListener, TableMod
 
         table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
         table.getColumnModel().getColumn(2).setPreferredWidth(200);
-        table.getModel().addTableModelListener(this);
 
         //count number of slag word
         dic_label.setText("Number of slang words: " + data.length);
@@ -106,25 +105,4 @@ public class DictionaryScreen extends JFrame implements ActionListener, TableMod
             new MenuScreen();
         }
     }
-
-    @Override
-    public void tableChanged(TableModelEvent e) {
-
-    }
-    /*@Override
-    public void tableChanged(TableModelEvent e) {
-        int row = table.getSelectedRow();
-        int col = table.getSelectedColumn();
-        if (row == -1 || col == -1)
-            return;
-        String Data = (String) table.getValueAt(row, col);
-        // System.out.println("Table element selected is: " + Data);
-
-        if (col == 2) {
-            // edit meaning
-            System.out.println("Old SlangWord: \t" + row + "\t" + data[row][2]);
-            System.out.println("Old SlangWord: \t" + row + "\t" + data[row][2]);
-        }slang_word.set((String) table.getValueAt(row, 1), data[row][2], (String) table.getValueAt(row, 2));
-        JOptionPane.showMessageDialog(this, "Updated a row.");
-    } */
 }
