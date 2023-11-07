@@ -19,7 +19,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class HistoryScreen extends JFrame implements ActionListener, TableModelListener {
+public class HistoryScreen extends JFrame implements ActionListener{
     JButton B_back;
     JButton B_clear;
     JTable table;
@@ -57,7 +57,6 @@ public class HistoryScreen extends JFrame implements ActionListener, TableModelL
 
         table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
         table.getColumnModel().getColumn(2).setPreferredWidth(200);
-        table.getModel().addTableModelListener(this);
 
 
         // make scoll panel
@@ -105,26 +104,14 @@ public class HistoryScreen extends JFrame implements ActionListener, TableModelL
             this.dispose();
             new MenuScreen();
         }
+        if (e.getSource() == B_clear) {
+            int res = slang_word.Clear_History();
+            if (res == 0)
+                JOptionPane.showMessageDialog(this, "Search-history file had been deleted", "CLEAR!", JOptionPane.PLAIN_MESSAGE);
+            if (res == 1)
+                JOptionPane.showMessageDialog(this, "Can't delete search history file", "ERROR!", JOptionPane.ERROR_MESSAGE);
+            if (res == 2)
+                JOptionPane.showMessageDialog(this, "Can't find search history file to delete", "NO FILE!", JOptionPane.PLAIN_MESSAGE);
+        }
     }
-
-    @Override
-    public void tableChanged(TableModelEvent e) {
-
-    }
-    /*@Override
-    public void tableChanged(TableModelEvent e) {
-        int row = table.getSelectedRow();
-        int col = table.getSelectedColumn();
-        if (row == -1 || col == -1)
-            return;
-        String Data = (String) table.getValueAt(row, col);
-        // System.out.println("Table element selected is: " + Data);
-
-        if (col == 2) {
-            // edit meaning
-            System.out.println("Old SlangWord: \t" + row + "\t" + data[row][2]);
-            System.out.println("Old SlangWord: \t" + row + "\t" + data[row][2]);
-        }slang_word.set((String) table.getValueAt(row, 1), data[row][2], (String) table.getValueAt(row, 2));
-        JOptionPane.showMessageDialog(this, "Updated a row.");
-    } */
 }

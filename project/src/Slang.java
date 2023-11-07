@@ -186,4 +186,13 @@ public class Slang {
         }
         return  result;
     }
+
+    public  int Clear_History() {
+        File f = new File(HISTORY_FILE);
+        if(f.exists()) {
+            if(f.delete()) {
+                return 0;
+            } else return 1;
+        } else return 2;
+    }
 }
