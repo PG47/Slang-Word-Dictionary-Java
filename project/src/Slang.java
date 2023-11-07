@@ -255,6 +255,15 @@ public class Slang {
         this.SaveFile(FILE);
     }
 
+    public void Reset() {
+        try {
+            ReadFile(ORIGINAL_FILE);
+            this.SaveFile(FILE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public String[] Random() {
         int random_number = Random_Num(0,map.size()-1);
         String random_slang[] = new String[2];

@@ -1,6 +1,6 @@
 Slag`Meaning
 #1`Number one
-$`Dollar| money|Rich AF
+$`Dollar| money
 $_$`Has money
 %)`Drunk| giddy
 &`And
@@ -222,7 +222,7 @@ $_$`Has money
 =[`Sad
 =]`Happy
 >,<`Angry| annoyed
->.<`Frustrated| angry| upset| in painu
+>.<`Frustrated| angry| upset| in pain
 >.>`Suspicious| wary
 >//<`Embarrassed| blushing
 >3`Evil but happy|Hate
@@ -7632,7 +7632,6 @@ ZZZ`Sleepy| bored| tired
 ^_^`Happiness| satisfied
 ^_~`Wink
 ^~^`Mischievous Smile
-nsfw`not safe for work
 |O|`LOL
 }:-)`Devilish smile
 ~`Denotes Sarcasm| Put At The End Of A Word To Make It Longer

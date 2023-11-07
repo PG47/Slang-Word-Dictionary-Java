@@ -85,7 +85,7 @@ public class RandomScreen extends JFrame implements ActionListener {
         this.setTitle("Ramdom slang_words");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        this.setSize(500, 500);
+        this.setSize(400, 400);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }

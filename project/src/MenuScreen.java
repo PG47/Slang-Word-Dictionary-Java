@@ -19,7 +19,7 @@ import static java.awt.SystemColor.text;
 
 public class MenuScreen extends JFrame implements ActionListener {
     JButton b1, b2, b3, b4, b5, b6, b7, b8;
-
+    Slang slang_word = Slang.getInstance();
 
     MenuScreen() {
         // Label
@@ -137,10 +137,26 @@ public class MenuScreen extends JFrame implements ActionListener {
             }
         }
 
+        if(e.getSource() == b6) {
+            int choice = JOptionPane.showConfirmDialog(this, "Do you really want to reset Slang Word Dictionary?", "Reset?",
+                    JOptionPane.YES_NO_OPTION);
+            if (choice==0) {
+                slang_word.Reset();
+                JOptionPane.showMessageDialog(this, "Slang word dictionary had been reset.", "DONE!", JOptionPane.PLAIN_MESSAGE);
+            }
+        }
         if(e.getSource() == b7) {
             this.dispose();
             try {
                 new RandomScreen();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+        if(e.getSource() == b8) {
+            this.dispose();
+            try {
+                new QuizScreen();
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
