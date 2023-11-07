@@ -172,7 +172,7 @@ public class SearchScreen extends JFrame implements ActionListener {
                 // Save the result in history
                 try {
                     for (int ii = 0; ii < result.length; ii++)
-                        slang_word.Save_History(result[ii][1], result[ii][2]);
+                        slang_word.Save_History(result[ii][0], result[ii][1]);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }

@@ -144,7 +144,7 @@ public class Slang {
         FileWriter fr = new FileWriter(f,true);
 
         //Save the date you search it
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date currentDate = new Date();
         String date = dateFormat.format(currentDate);
         fr.write(date + "`" + slang + "`" + definition + "\n");
@@ -159,13 +159,17 @@ public class Slang {
         try {
             Scanner scan = new Scanner(new File(HISTORY_FILE));
             scan.useDelimiter("`");
+            String date = scan.next();
             String temp = scan.next();
             String[] parts = scan.next().split("\n");
+            dates.add(date);
             slangs.add(temp);
             definitions.add(parts[0]);
             while (scan.hasNext()) {
-                temp=parts[1];
+                date =parts[1];
+                temp = scan.next();
                 parts = scan.next().split("\n");
+                dates.add(date);
                 slangs.add(temp);
                 definitions.add(parts[0]);
             }
@@ -176,7 +180,7 @@ public class Slang {
         int size = slangs.size();
         String result[][] = new String[size][3];
         for(int i=0;i<size;i++) {
-            result[size-i-1][0] = String.valueOf(i);
+            result[size-i-1][0] = dates.get(i);
             result[size-i-1][1] = slangs.get(i);
             result[size-i-1][2] = definitions.get(i);
         }
