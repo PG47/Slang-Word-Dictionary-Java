@@ -168,6 +168,15 @@ public class SearchScreen extends JFrame implements ActionListener {
                     String ss[] = result[i];
                     model.addRow(ss);
                 }
+
+                // Save the result in history
+                try {
+                    for (int ii = 0; ii < result.length; ii++)
+                        slang_word.Save_History(result[ii][1], result[ii][2]);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+
             }
             else JOptionPane.showMessageDialog(this, "Can't find the slang you want", "NO RESULT", JOptionPane.INFORMATION_MESSAGE);
         }

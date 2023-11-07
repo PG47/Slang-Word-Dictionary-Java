@@ -9,12 +9,17 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Slang {
     private TreeMap<String, List<String>> map = new TreeMap<>();
     private static Slang obj = new Slang();
     private int size_map;
     private String FILE="slang.txt";
     private String ORIGINAL_FILE = "original-slang.txt";
+
+    private String HISTORY_FILE = "searching-history.txt";
 
     private Slang() {
         try {
@@ -131,5 +136,50 @@ public class Slang {
             result[i][1]=defin_list.get(i);
         }
         return result;
+    }
+
+    public void  Save_History(String slang, String definition)
+    throws  Exception{
+        File f = new File(HISTORY_FILE);
+        FileWriter fr = new FileWriter(f,true);
+
+        //Save the date you search it
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        Date currentDate = new Date();
+        String date = dateFormat.format(currentDate);
+        fr.write(date + "`" + slang + "`" + definition + "\n");
+        fr.close();
+    }
+
+    public String[][] Read_History() {
+        List<String> dates = new ArrayList<>();
+        List<String> slangs = new ArrayList<>();
+        List<String> definitions = new ArrayList<>();
+
+        try {
+            Scanner scan = new Scanner(new File(HISTORY_FILE));
+            scan.useDelimiter("`");
+            String temp = scan.next();
+            String[] parts = scan.next().split("\n");
+            slangs.add(temp);
+            definitions.add(parts[0]);
+            while (scan.hasNext()) {
+                temp=parts[1];
+                parts = scan.next().split("\n");
+                slangs.add(temp);
+                definitions.add(parts[0]);
+            }
+            scan.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int size = slangs.size();
+        String result[][] = new String[size][3];
+        for(int i=0;i<size;i++) {
+            result[size-i-1][0] = String.valueOf(i);
+            result[size-i-1][1] = slangs.get(i);
+            result[size-i-1][2] = definitions.get(i);
+        }
+        return  result;
     }
 }

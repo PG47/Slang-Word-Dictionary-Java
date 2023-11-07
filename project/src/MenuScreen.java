@@ -120,5 +120,13 @@ public class MenuScreen extends JFrame implements ActionListener {
                 e1.printStackTrace();
             }
         }
+        if(e.getSource() == b3) {
+            this.dispose();
+            try {
+                new HistoryScreen();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 }

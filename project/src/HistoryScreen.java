@@ -19,33 +19,29 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class DictionaryScreen extends JFrame implements ActionListener, TableModelListener {
+public class HistoryScreen extends JFrame implements ActionListener, TableModelListener {
     JButton B_back;
+    JButton B_clear;
     JTable table;
     Slang slang_word;
 
-    public DictionaryScreen() throws Exception {
+    public HistoryScreen() throws Exception {
         Container contain = this.getContentPane();
         slang_word = Slang.getInstance();
 
         //make title
         JLabel title = new JLabel();
-        title.setText("DICTIONARY");
+        title.setText("SEARCHING HISTORY");
         title.setForeground(Color.red);
         title.setFont(new Font("Gill Sans MT", Font.PLAIN,30));
         title.setAlignmentX(CENTER_ALIGNMENT);
 
-        //make dictionary label
-        JLabel dic_label = new JLabel();
-        dic_label.setForeground(Color.black);
-        dic_label.setFont(new Font("Gill Sans MT", Font.PLAIN,15));
-        dic_label.setAlignmentX(CENTER_ALIGNMENT);
 
         // make list slang words
         JPanel slag_table = new JPanel();
         slag_table.setBackground(Color.black);
-        String data[][]= Slang.getInstance().get_Data();
-        String header_column[] = { "STT", "Slag", "Meaning" };
+        String data[][]= Slang.getInstance().Read_History();
+        String header_column[] = { "Date", "Slag", "Meaning" };
         table = new JTable(data, header_column);
         table.setRowHeight(25);
         table.setEnabled(false);
@@ -63,40 +59,44 @@ public class DictionaryScreen extends JFrame implements ActionListener, TableMod
         table.getColumnModel().getColumn(2).setPreferredWidth(200);
         table.getModel().addTableModelListener(this);
 
-        //count number of slag word
-        dic_label.setText("Number of slang words: " + data.length);
 
         // make scoll panel
         JScrollPane scroll = new JScrollPane(table);
         slag_table.setLayout(new BoxLayout(slag_table, BoxLayout.X_AXIS));
         slag_table.add(scroll);
 
-        // make Back button
         JPanel bottom_panel = new JPanel();
+        // make Back button
         B_back = new JButton("Back");
         B_back.addActionListener(this);
         B_back.setFocusable(false);
         B_back.setAlignmentX(CENTER_ALIGNMENT);
+        // make Clear history button
+        B_clear = new JButton("Clear history");
+        B_clear.addActionListener(this);
+        B_clear.setFocusable(false);
+        B_clear.setAlignmentX(CENTER_ALIGNMENT);
         bottom_panel.add(B_back);
+        bottom_panel.add(B_clear);
 
         //Put all in the container
         contain.setLayout(new BoxLayout(contain, BoxLayout.Y_AXIS));
         contain.add(Box.createRigidArea(new Dimension(0,10)));
         contain.add(title);
         contain.add(Box.createRigidArea(new Dimension(0,20)));
-        contain.add(dic_label);
-        contain.add(Box.createRigidArea(new Dimension(0,20)));
         contain.add(slag_table);
         contain.add(Box.createRigidArea(new Dimension(0,20)));
         contain.add(bottom_panel);
 
         // Set Frame
-        this.setTitle("DICTIONARY");
+        this.setTitle("HISTORY");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setSize(600, 600);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        if(data.length==0)
+            JOptionPane.showMessageDialog(this, "Can't find search history file", "EMPTY!", JOptionPane.PLAIN_MESSAGE);
     }
 
     @Override
