@@ -60,14 +60,10 @@ public class Slang {
 
             //If slag have more than 1 mean
             if (part[0].contains("|")) {
-                System.out.println(part[0]);
                 String[] d = (part[0]).split("\\|");
-                for (int ii = 0; ii < d.length; ii++)
-                    System.out.println(d[ii]);
                 Collections.addAll(meaning, d);
                 size_map += d.length - 1;
             } else {
-                System.out.println(part[0]);
                 meaning.add(part[0]);
             }
             map.put(slag, meaning);
@@ -100,7 +96,7 @@ public class Slang {
             pw.close();
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
