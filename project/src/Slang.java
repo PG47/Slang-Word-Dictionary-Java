@@ -145,13 +145,13 @@ public class Slang {
 
     public String[][] Search_by_Definition(String key) {
         List<String> key_list = new ArrayList<>();
-        List<String> defin_list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         for(Entry<String, List<String>> entry:map.entrySet()) {
             List<String> definitions = entry.getValue();
             for(int i=0;i<definitions.size();i++) {
                 if (definitions.get(i).toLowerCase().contains(key.toLowerCase())) {
                     key_list.add(entry.getKey());
-                    defin_list.add(definitions.get(i));
+                    list.add(definitions.get(i));
                 }
             }
         }
@@ -161,7 +161,7 @@ public class Slang {
 
         for (int i=0;i<size; i++) {
             result[i][0]=key_list.get(i);
-            result[i][1]=defin_list.get(i);
+            result[i][1]=list.get(i);
         }
         return result;
     }
@@ -232,39 +232,46 @@ public class Slang {
         return false;
     }
 
+    public void Edit(String slang, String old_defin, String new_defin) {
+        List<String> list = map.get(slang);
+        int index = list.indexOf(old_defin);
+        list.set(index,new_defin);
+        this.SaveFile(FILE);
+    }
+
     public  void Delete(String slang, String defin) {
-        List<String> defin_list = map.get(slang);
-        int index = defin_list.indexOf(defin);
-        if(defin_list.size() == 1) {
+        List<String> list = map.get(slang);
+        int index = list.indexOf(defin);
+        if(list.size() == 1) {
             map.remove(slang);
         } else {
-            defin_list.remove(index);
-            map.put(slang,defin_list);
+            list.remove(index);
+            map.put(slang,list);
         }
         size_map--;
         this.SaveFile(FILE);
     }
 
     public void Add_New(String slang, String definition) {
-        List<String> defin_list = new ArrayList<>();
-        defin_list.add(definition);
+        List<String> list = new ArrayList<>();
+        list.add(definition);
         size_map++;
-        map.put(slang,defin_list);
+        map.put(slang,list);
         this.SaveFile(FILE);
     }
 
     public void Overwrite(String slang, String definition) {
-        List<String> defin_list = map.get(slang);
-        defin_list.set(0,definition);
-        map.put(slang,defin_list);
+        List<String> list = map.get(slang);
+        list.set(0,definition);
+        map.put(slang,list);
         this.SaveFile(FILE);
     }
 
     public void Duplicate(String slang, String definition) {
-        List<String> defin_list = map.get(slang);
-        defin_list.add(definition);
+        List<String> list = map.get(slang);
+        list.add(definition);
         size_map++;
-        map.put(slang,defin_list);
+        map.put(slang,list);
         this.SaveFile(FILE);
     }
 

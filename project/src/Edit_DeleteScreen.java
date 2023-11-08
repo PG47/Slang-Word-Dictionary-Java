@@ -10,8 +10,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSelectionListener{
-    JButton B_back, B_search;
-    JTextField text_field;;
+    JButton B_back, B_search, B_save;
+    JTextField text_field, edit_text_field;
+
     JTable table;
     Slang slang_word;
     DefaultTableModel model;
@@ -160,7 +161,7 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
         int choice = JOptionPane.showOptionDialog(this, "Select what you want to do with this slang:", "Do what?",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
         if(choice == 0) {
-            Edit();
+            Edit(row,col);
         }
         else {
             slang_word.Delete(choosen_slang,(String) table.getValueAt(row,2));
@@ -174,7 +175,50 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
         model.setRowCount(0);
     }
 
-    void Edit() {
+    void Edit(int row, int col) {
+        String chosen_slang = (String) table.getValueAt(row, 1);
+        String old_defin = (String) table.getValueAt(row, 2);
 
+        JDialog edit_dialog = new JDialog(this, "Edit slang word for `" + chosen_slang + "`", true);
+
+        edit_text_field = new JTextField(20);
+        B_save = new JButton("Save");
+
+        B_save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String edited_defin = edit_text_field.getText();
+                if (!edited_defin.isEmpty()) {
+                    slang_word.Edit(chosen_slang, old_defin, edited_defin);
+                    JOptionPane.showMessageDialog(edit_dialog, "Edit successful!");
+                    edit_dialog.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(edit_dialog, "Please enter some text.");
+                }
+            }
+        });
+
+        JPanel edit_panel = new JPanel();
+        edit_panel.setLayout(new BoxLayout(edit_panel, BoxLayout.Y_AXIS));
+        edit_panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        edit_panel.add(new JLabel("Current definition: " + old_defin));
+
+        JPanel edit_textbox = new JPanel();
+        edit_textbox.add(new JLabel("New definition:"));
+        edit_textbox.add(edit_text_field);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Center-align the button
+        buttonPanel.add(B_save);
+
+        edit_panel.add(edit_textbox);
+        edit_panel.add(buttonPanel);
+
+        edit_dialog.add(edit_panel);
+        edit_dialog.pack();
+        edit_dialog.setLocationRelativeTo(this);
+        edit_dialog.setVisible(true);
     }
+
 }
