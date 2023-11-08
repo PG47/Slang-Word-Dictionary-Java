@@ -16,8 +16,8 @@ import javax.swing.JPanel;
 
 public class QuizScreen extends JFrame implements ActionListener {
     JButton B_back;
-    int score=0;
-    int index=1;
+    JButton B_slang_quiz;
+    JButton B_defin_quiz;
 
     QuizScreen() {
         // Making container
@@ -25,18 +25,62 @@ public class QuizScreen extends JFrame implements ActionListener {
         contain.setLayout(new BoxLayout(contain,BoxLayout.Y_AXIS));
 
         // Make title
-        JLabel title = new JLabel("Quiz "+Integer.toString(index)+"/10");
+        JLabel title = new JLabel("CHOOSE WHAT QUIZ YOU WANT?");
         title.setForeground(Color.red);
         title.setFont(new Font("Gill Sans MT", Font.PLAIN, 30));
         title.setAlignmentX(CENTER_ALIGNMENT);
 
-        
+        // Mid panel
+        JPanel mid_panel = new JPanel();
+        mid_panel.setLayout(new BoxLayout(mid_panel,BoxLayout.X_AXIS));
+
+        // Make button for slang quiz
+        B_slang_quiz = new JButton("Slang Quiz");
+        B_slang_quiz.addActionListener(this);
+        B_slang_quiz.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
+
+        // Make button for definition quiz
+        B_defin_quiz = new JButton("Definition Quiz");
+        B_defin_quiz.addActionListener(this);
+        B_defin_quiz.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
+        mid_panel.add(B_slang_quiz);
+        mid_panel.add(B_defin_quiz);
+
+        //Bottom panel for back and reroll button
+        JPanel bottom_panel = new JPanel();
+        bottom_panel.setAlignmentX(CENTER_ALIGNMENT);
+        B_back = new JButton("Back");
+        B_back.addActionListener(this);
+        bottom_panel.add(B_back);
+
+        //Put all int the contain
+        contain.add(Box.createRigidArea(new Dimension(0, 100)));
+        contain.add(title);
+        contain.add(Box.createRigidArea(new Dimension(0, 100)));
+        contain.add(mid_panel);
+        contain.add(Box.createRigidArea(new Dimension(0, 100)));
+        contain.add(bottom_panel);
 
         // Set Frame
-        this.setTitle("QUIZ");
+        this.setTitle("QUIZ - Choose quiz?");
         this.setVisible(true);
-        this.setSize(600, 600);
+        this.setSize(550, 500);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        if (e.getSource() == B_slang_quiz) {
+            this.dispose();
+            //new QuestionFrame(1, 1);
+        } else if (e.getSource() == B_defin_quiz) {
+            this.dispose();
+            //new QuestionFrame(2, 1);
+        } else if (e.getSource() == B_back) {
+            this.dispose();
+            new MenuScreen();
+        }
     }
 }
