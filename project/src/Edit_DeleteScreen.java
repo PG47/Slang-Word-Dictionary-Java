@@ -164,9 +164,13 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
             Edit(row,col);
         }
         else {
-            slang_word.Delete(choosen_slang,(String) table.getValueAt(row,2));
-            model.removeRow(row);
-            JOptionPane.showMessageDialog(this, "Deleted successfully");
+            int yn = JOptionPane.showConfirmDialog(this, "Do you really want to delete this slang word?", "DELETE!",
+                    JOptionPane.YES_NO_OPTION);
+            if(yn == 0) {
+                slang_word.Delete(choosen_slang, (String) table.getValueAt(row, 2));
+                model.removeRow(row); //Delete the selected row
+                JOptionPane.showMessageDialog(this, "Deleted successfully");
+            }
         }
     }
 
