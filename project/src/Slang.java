@@ -280,6 +280,43 @@ public class Slang {
     }
 
     public static int Random_Num(int minimum, int maximum) {
-        return (minimum + (int) (Math.random() * maximum));
+        return minimum + (int) (Math.random() * (maximum - minimum + 1));
+    }
+
+    public String[] Quiz(int type) {
+        String ques[] = new String[6];
+        if(type==0) { //Slang quiz
+            String[] slang = this.Random();
+            ques[0]=slang[0];
+            ques[1]=slang[1];
+            int rand_pos = Random_Num(2,5);
+            ques[rand_pos] = ques[1];
+            for(int i=2;i<=5;i++) {
+                if(i!=rand_pos) {
+                    String[] wrong_ans = this.Random();
+                    while(wrong_ans[0] == ques[0]) {
+                        wrong_ans = this.Random();
+                    }
+                    ques[i]=wrong_ans[1];
+                }
+            }
+        }
+        if(type==1) { //Definition quizz
+            String[] slang = this.Random();
+            ques[0]=slang[1];
+            ques[1]=slang[0];
+            int rand_pos = Random_Num(2,5);
+            ques[rand_pos] = ques[1];
+            for(int i=2;i<=5;i++) {
+                if(i!=rand_pos) {
+                    String[] wrong_ans = this.Random();
+                    while(wrong_ans[0] == ques[1]) {
+                        wrong_ans = this.Random();
+                    }
+                    ques[i]=wrong_ans[0];
+                }
+            }
+        }
+        return  ques;
     }
 }

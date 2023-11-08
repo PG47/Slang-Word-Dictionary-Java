@@ -46,7 +46,7 @@ public class QuizScreen extends JFrame implements ActionListener {
         mid_panel.add(B_slang_quiz);
         mid_panel.add(B_defin_quiz);
 
-        //Bottom panel for back and reroll button
+        //Bottom panel for back and button
         JPanel bottom_panel = new JPanel();
         bottom_panel.setAlignmentX(CENTER_ALIGNMENT);
         B_back = new JButton("Back");
@@ -71,13 +71,12 @@ public class QuizScreen extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
         if (e.getSource() == B_slang_quiz) {
             this.dispose();
-            //new QuestionFrame(1, 1);
+            new QuestionScreen(0,1,0);
         } else if (e.getSource() == B_defin_quiz) {
             this.dispose();
-            //new QuestionFrame(2, 1);
+            new QuestionScreen(1,1,0);
         } else if (e.getSource() == B_back) {
             this.dispose();
             new MenuScreen();
