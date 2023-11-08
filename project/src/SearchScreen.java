@@ -79,7 +79,7 @@ public class SearchScreen extends JFrame implements ActionListener {
         //make result table
         JPanel panel_table = new JPanel();
         panel_table.setBackground(Color.black);
-        String[] header_column= {"Slang word", "Meaning"};
+        String[] header_column= {"Slang", "Definition"};
         result_table = new JTable(new DefaultTableModel(header_column,0));
         result_table.setRowHeight(25);
         result_table.setEnabled(false);
@@ -116,7 +116,7 @@ public class SearchScreen extends JFrame implements ActionListener {
         contain.add(Box.createRigidArea(new Dimension(0, 10)));
         contain.add(panel_table);
         contain.add(Box.createRigidArea(new Dimension(0, 10)));
-        contain.add(B_back);
+        contain.add(bottom_panel);
 
         // set Frame
         this.setTitle("SEARCHING");

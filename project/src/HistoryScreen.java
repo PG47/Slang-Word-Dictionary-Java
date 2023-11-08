@@ -43,7 +43,7 @@ public class HistoryScreen extends JFrame implements ActionListener{
         JPanel slang_table = new JPanel();
         slang_table.setBackground(Color.black);
         String data[][]= Slang.getInstance().Read_History();
-        String header_column[] = { "Date", "Slag", "Meaning" };
+        String header_column[] = { "Date", "Slag", "" };
         table = new JTable(new DefaultTableModel(data, header_column));
         table.setRowHeight(25);
         table.setEnabled(false);

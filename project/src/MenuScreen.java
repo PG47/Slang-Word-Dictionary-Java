@@ -19,14 +19,19 @@ import static java.awt.SystemColor.text;
 
 public class MenuScreen extends JFrame implements ActionListener {
     JButton b1, b2, b3, b4, b5, b6, b7, b8;
+    JButton B_close;
     Slang slang_word = Slang.getInstance();
 
     MenuScreen() {
+        //Make a contain
+        Container contain = this.getContentPane();
+        contain.setLayout(new BoxLayout(contain, BoxLayout.Y_AXIS));
+        
         // Label
-        JLabel label = new JLabel("Slang Program");
-        label.setForeground(Color.red);
-        label.setFont(new Font("Gill Sans MT", Font.PLAIN, 30));
-        label.setAlignmentX(CENTER_ALIGNMENT);
+        JLabel title = new JLabel("Slang Program");
+        title.setForeground(Color.red);
+        title.setFont(new Font("Gill Sans MT", Font.PLAIN, 30));
+        title.setAlignmentX(CENTER_ALIGNMENT);
 
         //8 button for menu options
         b1 = new JButton("Dicitonary");
@@ -70,27 +75,35 @@ public class MenuScreen extends JFrame implements ActionListener {
         b8.setFocusable(false);
 
         // Panel for Button
-        JPanel panelCenter = new JPanel();
-        panelCenter.setLayout(new GridLayout(4, 2, 8, 8));
-        panelCenter.add(b1);
-        panelCenter.add(b2);
-        panelCenter.add(b3);
-        panelCenter.add(b4);
-        panelCenter.add(b5);
-        panelCenter.add(b6);
-        panelCenter.add(b7);
-        panelCenter.add(b8);
+        JPanel mid_panel = new JPanel();
+        mid_panel.setLayout(new GridLayout(4, 2, 8, 8));
+        mid_panel.add(b1);
+        mid_panel.add(b2);
+        mid_panel.add(b3);
+        mid_panel.add(b4);
+        mid_panel.add(b5);
+        mid_panel.add(b6);
+        mid_panel.add(b7);
+        mid_panel.add(b8);
+
+        //Close program button
+        JPanel bottom_panel = new JPanel();
+        bottom_panel.setAlignmentX(CENTER_ALIGNMENT);
+        B_close = new JButton("Close");
+        B_close.addActionListener(this);
+        bottom_panel.add(B_close);
 
         Dimension size2 = new Dimension(500, 450);
-        panelCenter.setMaximumSize(size2);
-        panelCenter.setPreferredSize(size2);
-        panelCenter.setMinimumSize(size2);
-        Container con = this.getContentPane();
-        con.setLayout(new BoxLayout(con, BoxLayout.Y_AXIS));
-        con.add(Box.createRigidArea(new Dimension(0, 10)));
-        con.add(label);
-        con.add(Box.createRigidArea(new Dimension(0, 20)));
-        con.add(panelCenter);
+        mid_panel.setMaximumSize(size2);
+        mid_panel.setPreferredSize(size2);
+        mid_panel.setMinimumSize(size2);
+        
+        //Put all in the contain
+        contain.add(Box.createRigidArea(new Dimension(0, 10)));
+        contain.add(title);
+        contain.add(Box.createRigidArea(new Dimension(0, 20)));
+        contain.add(mid_panel);
+        contain.add(bottom_panel);
 
         // Set Frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -136,7 +149,14 @@ public class MenuScreen extends JFrame implements ActionListener {
                 e1.printStackTrace();
             }
         }
-
+        if(e.getSource() == b5) {
+            this.dispose();
+            try {
+                new Edit_DeleteScreen();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
         if(e.getSource() == b6) {
             int choice = JOptionPane.showConfirmDialog(this, "Do you really want to reset Slang Word Dictionary?", "Reset?",
                     JOptionPane.YES_NO_OPTION);
@@ -160,6 +180,11 @@ public class MenuScreen extends JFrame implements ActionListener {
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
+        }
+
+        if (e.getSource() == B_close) {
+            this.dispose();
+            return;
         }
     }
 }

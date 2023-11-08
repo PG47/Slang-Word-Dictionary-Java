@@ -46,7 +46,7 @@ public class QuizScreen extends JFrame implements ActionListener {
         mid_panel.add(B_slang_quiz);
         mid_panel.add(B_defin_quiz);
 
-        //Bottom panel for back and button
+        //Bottom panel for back button
         JPanel bottom_panel = new JPanel();
         bottom_panel.setAlignmentX(CENTER_ALIGNMENT);
         B_back = new JButton("Back");

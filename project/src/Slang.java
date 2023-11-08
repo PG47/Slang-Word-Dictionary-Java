@@ -104,7 +104,7 @@ public class Slang {
         }
     }
 
-    public String[][] get_Data() {
+    public String[][] Get_Data() {
         String list[][] = new String[size_map][3];
         Set<String> slang_list_set = map.keySet();
         Object[] slang_list = slang_list_set.toArray();
@@ -230,6 +230,19 @@ public class Slang {
                 return true;
         }
         return false;
+    }
+
+    public  void Delete(String slang, String defin) {
+        List<String> defin_list = map.get(slang);
+        int index = defin_list.indexOf(defin);
+        if(defin_list.size() == 1) {
+            map.remove(slang);
+        } else {
+            defin_list.remove(index);
+            map.put(slang,defin_list);
+        }
+        size_map--;
+        this.SaveFile(FILE);
     }
 
     public void Add_New(String slang, String definition) {
