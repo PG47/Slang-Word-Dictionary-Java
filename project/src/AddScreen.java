@@ -103,7 +103,7 @@ public class AddScreen extends JFrame implements ActionListener {
             String slang = textField_slang.getText();
             String definition = textField_definition.getText();
             if(slang.isEmpty() || definition.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Slang and Definition can't empty", "EMPTY INPUT!",
+                JOptionPane.showMessageDialog(this, "Slang and Definitions cannot be left blank", "EMPTY INPUT!",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -112,7 +112,7 @@ public class AddScreen extends JFrame implements ActionListener {
             if(slang_word.Check_Slang(slang)) {
                 Object[] options = {"Overwrite it", "Make a new definition for it"};
                 int choice = JOptionPane.showOptionDialog(this,
-                        "Slang word have already exist!", "Oops",
+                        "This slang word already exists!", "Oops!",
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
                 if (choice == 0) { //Overwrite
                     slang_word.Overwrite(slang,definition);
@@ -123,7 +123,7 @@ public class AddScreen extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Done!");
             } else {
                 slang_word.Add_New(slang,definition);
-                JOptionPane.showMessageDialog(this, "Add success!");
+                JOptionPane.showMessageDialog(this, "Added successfully!");
             }
         }
     }

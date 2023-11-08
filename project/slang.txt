@@ -1,8 +1,6 @@
 Slag`Meaning
-#1`edited
 $`Dollar
-$_$`Has money
-%)`Drunk| giddy
+%)` giddy
 &`And
 &APOS;S`Wrongly displayed 's
 &HEARTS;`HTML code for a heart

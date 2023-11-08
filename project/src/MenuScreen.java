@@ -158,11 +158,11 @@ public class MenuScreen extends JFrame implements ActionListener {
             }
         }
         if(e.getSource() == b6) {
-            int choice = JOptionPane.showConfirmDialog(this, "Do you really want to reset Slang Word Dictionary?", "Reset?",
+            int choice = JOptionPane.showConfirmDialog(this, "Do you really want to reset the Slang Dictionary?", "Reset?",
                     JOptionPane.YES_NO_OPTION);
             if (choice==0) {
                 slang_word.Reset();
-                JOptionPane.showMessageDialog(this, "Slang word dictionary had been reset.", "DONE!", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Slang word dictionary has been reset.", "DONE!", JOptionPane.PLAIN_MESSAGE);
             }
         }
         if(e.getSource() == b7) {

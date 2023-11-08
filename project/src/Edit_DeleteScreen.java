@@ -29,14 +29,14 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
         title1.setForeground(Color.red);
         title1.setFont(new Font("Gill Sans MT", Font.PLAIN, 28));
         title1.setAlignmentX(CENTER_ALIGNMENT);
-        JLabel title2 = new JLabel("Choose a slang word you want to edit or delete");
+        JLabel title2 = new JLabel("Select a slang word you want to edit or remove.");
         title2.setFont(new Font("Gill Sans MT", Font.PLAIN, 20));
         title2.setAlignmentX(CENTER_ALIGNMENT);
 
         // Make Search text field;
         JPanel text_box = new JPanel();
         text_box.setBackground(Color.gray);
-        JLabel info_textbox = new JLabel("Input keyword:");
+        JLabel info_textbox = new JLabel("Search slang:");
         text_field = new JTextField(20);
         B_search = new JButton("SEARCH");
         B_search.addActionListener(this);
@@ -55,7 +55,7 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
         JPanel table_panel = new JPanel();
         table_panel.setBackground(Color.black);
         data = slang_word.Get_Data();
-        String[] header_column= {"STT", "Slang", "Definition"};
+        String[] header_column= {"No.", "Slang", "Definition"};
         table = new JTable(new DefaultTableModel(data, header_column));
         model = (DefaultTableModel) table.getModel();
         table.setRowHeight(25);
@@ -103,7 +103,7 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
         contain.add(B_back);
 
         // set Frame
-        this.setTitle("SEARCHING");
+        this.setTitle("EDIT & DELETE");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setSize(600, 600);
@@ -158,7 +158,7 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
         if(row==-1 || col ==-1) return;
         String choosen_slang = (String) table.getValueAt(row,1);
         Object[] options = { "Edit slang", "Delete slang"};
-        int choice = JOptionPane.showOptionDialog(this, "Select what you want to do with this slang:", "Do what?",
+        int choice = JOptionPane.showOptionDialog(this, "Choose what you want to do with this slang:", "Do what?",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
         if(choice == 0) {
             Edit(row,col);
@@ -166,7 +166,7 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
         else {
             slang_word.Delete(choosen_slang,(String) table.getValueAt(row,2));
             model.removeRow(row);
-            JOptionPane.showMessageDialog(this, "Deleted success");
+            JOptionPane.showMessageDialog(this, "Deleted successfully");
         }
     }
 
@@ -190,10 +190,10 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
                 String edited_defin = edit_text_field.getText();
                 if (!edited_defin.isEmpty()) {
                     slang_word.Edit(chosen_slang, old_defin, edited_defin);
-                    JOptionPane.showMessageDialog(edit_dialog, "Edit successful!");
+                        JOptionPane.showMessageDialog(edit_dialog, "Edit successfully!");
                     edit_dialog.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(edit_dialog, "Please enter some text.");
+                    JOptionPane.showMessageDialog(edit_dialog, "Can't be left blank.");
                 }
             }
         });

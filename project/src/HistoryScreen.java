@@ -43,7 +43,7 @@ public class HistoryScreen extends JFrame implements ActionListener{
         JPanel slang_table = new JPanel();
         slang_table.setBackground(Color.black);
         String data[][]= Slang.getInstance().Read_History();
-        String header_column[] = { "Date", "Slag", "" };
+        String header_column[] = { "Date", "Slag", "Defintion" };
         table = new JTable(new DefaultTableModel(data, header_column));
         table.setRowHeight(25);
         table.setEnabled(false);
@@ -111,12 +111,12 @@ public class HistoryScreen extends JFrame implements ActionListener{
             if (res == 0) {
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
                 model.setRowCount(0);
-                JOptionPane.showMessageDialog(this, "Search-history file had been deleted", "CLEAR!", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Search-history file has been deleted", "CLEAR!", JOptionPane.PLAIN_MESSAGE);
             }
             if (res == 1)
                 JOptionPane.showMessageDialog(this, "Can't delete search history file", "ERROR!", JOptionPane.ERROR_MESSAGE);
             if (res == 2)
-                JOptionPane.showMessageDialog(this, "Can't find search history file to delete", "NO FILE!", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No search history file found to delete", "NO FILE!", JOptionPane.PLAIN_MESSAGE);
         }
     }
 }

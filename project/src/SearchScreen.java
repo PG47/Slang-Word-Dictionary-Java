@@ -46,7 +46,7 @@ public class SearchScreen extends JFrame implements ActionListener {
 
         //make info label
         info_label = new JLabel();
-        info_label.setText("Find the slang word you want and it meanings");
+        info_label.setText("Find the slang word you want and its meaning");
         info_label.setForeground(Color.green);
         info_label.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
         info_label.setAlignmentX(CENTER_ALIGNMENT);
@@ -143,7 +143,7 @@ public class SearchScreen extends JFrame implements ActionListener {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Object[] options = { "Search by slang word", "Search by slang definition"};
+            Object[] options = { "Search by slang", "Search by definition"};
             int choice = JOptionPane.showOptionDialog(this, "Select type of search", "Search type?",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
             String[][] result  = null;

@@ -45,7 +45,7 @@ public class DictionaryScreen extends JFrame implements ActionListener{
         JPanel slag_table = new JPanel();
         slag_table.setBackground(Color.black);
         String data[][]= Slang.getInstance().Get_Data();
-        String header_column[] = { "STT", "Slag", "Definition" };
+        String header_column[] = { "No.", "Slag", "Definition" };
         table = new JTable(data, header_column);
         table.setRowHeight(25);
         table.setEnabled(false);

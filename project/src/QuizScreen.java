@@ -25,7 +25,7 @@ public class QuizScreen extends JFrame implements ActionListener {
         contain.setLayout(new BoxLayout(contain,BoxLayout.Y_AXIS));
 
         // Make title
-        JLabel title = new JLabel("CHOOSE WHAT QUIZ YOU WANT?");
+        JLabel title = new JLabel("CHOOSE WHICH TYPE OF QUIZ YOU WANT?");
         title.setForeground(Color.red);
         title.setFont(new Font("Gill Sans MT", Font.PLAIN, 30));
         title.setAlignmentX(CENTER_ALIGNMENT);
