@@ -163,7 +163,7 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
         if(choice == 0) {
             Edit(row,col);
         }
-        else {
+        else if(choice == 1){
             int yn = JOptionPane.showConfirmDialog(this, "Do you really want to delete this slang word?", "DELETE!",
                     JOptionPane.YES_NO_OPTION);
             if(yn == 0) {

@@ -162,8 +162,7 @@ public class QuestionScreen extends JFrame implements ActionListener {
             if(score==100) {
                 comment = "YOU ARE A GENIUS!";
                 StyleConstants.setForeground(line2, Color.blue);
-            }
-            if(score>=80) {
+            }else if(score>=80) {
                 comment ="WELL DONE!";
                 StyleConstants.setForeground(line2, Color.yellow);
             }
