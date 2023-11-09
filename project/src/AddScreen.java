@@ -7,6 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -16,13 +20,43 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 
 public class AddScreen extends JFrame implements ActionListener {
     Slang slang_word;
     JButton B_back, B_add;
     JTextField textField_slang, textField_definition;
 
+    public class JGradientButton extends JButton {
+        private Color startColor;
+        private Color endColor;
+
+        public JGradientButton(String text, Color startColor, Color endColor) {
+            super(text);
+            this.startColor = startColor;
+            this.endColor = endColor;
+            setContentAreaFilled(false);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setPaint(new GradientPaint(
+                    new Point(0, 0),
+                    startColor,
+                    new Point(0, getHeight() / 3),
+                    Color.WHITE));
+            g2.fillRect(0, 0, getWidth(), getHeight() / 3);
+            g2.setPaint(new GradientPaint(
+                    new Point(0, getHeight() / 3),
+                    Color.WHITE,
+                    new Point(0, getHeight()),
+                    endColor));
+            g2.fillRect(0, getHeight() / 3, getWidth(), getHeight());
+            g2.dispose();
+
+            super.paintComponent(g);
+        }
+    }
     AddScreen() {
         // Make Container
         slang_word = Slang.getInstance();
@@ -61,12 +95,12 @@ public class AddScreen extends JFrame implements ActionListener {
 
         // make Back button & Add button
         JPanel bottom_panel = new JPanel();
-        B_back=new JButton("Back");
+        B_back=new JGradientButton("Back", Color.RED, Color.PINK);
         B_back.addActionListener(this);
         B_back.setFocusable(false);
         B_back.setAlignmentX(CENTER_ALIGNMENT);
 
-        B_add=new JButton("Add");
+        B_add=new JGradientButton("Add", Color.BLUE, Color.CYAN);
         B_add.addActionListener(this);
         B_add.setFocusable(false);
         B_add.setAlignmentX(CENTER_ALIGNMENT);
