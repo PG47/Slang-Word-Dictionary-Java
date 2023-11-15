@@ -1,8 +1,4 @@
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,34 +10,58 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import static java.awt.Color.*;
+
 public class RandomScreen extends JFrame implements ActionListener {
     JButton B_back, B_reroll;
     Slang slang_word = Slang.getInstance();
     JLabel l2, l4;
 
+    public class GradientPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics graphics) {
+            super.paintComponent(graphics);
+
+            int width = getWidth();
+            int height = getHeight();
+
+            //Define the color radient and its direction
+            Color color1 = red;
+            Color color2 = blue;
+            GradientPaint gradient = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+
+            Graphics2D graphics2D = (Graphics2D) graphics;
+            graphics2D.setPaint(gradient);
+            graphics2D.fillRect(0, 0, width, height);
+        }
+    }
+
     RandomScreen() {
         //set Container
-        Container contain = this.getContentPane();
-        contain.setLayout(new BoxLayout(contain, BoxLayout.Y_AXIS));
+        GradientPanel contain = new GradientPanel();
+        contain.setLayout(new BoxLayout(contain,BoxLayout.Y_AXIS));
+        contain.setPreferredSize(new Dimension(600, 600));
+        setContentPane(contain);
 
         //make title
         JPanel top_panel = new JPanel();
         top_panel.setMaximumSize(new Dimension(500,500));
         JLabel title = new JLabel("RADOM SLANG WORD");
         title.setFont(new Font("Gill Sans MT", Font.PLAIN,30));
-        title.setBackground(Color.GREEN);
-        title.setForeground(Color.RED);
+        title.setForeground(GREEN);
         title.setAlignmentX(CENTER_ALIGNMENT);
         top_panel.add(title);
 
         // Make middle panel
         String random_slang[] = slang_word.Random();
         JPanel mid_panel = new JPanel();
+        mid_panel.setOpaque(false);
         mid_panel.setBackground(Color.gray);
         mid_panel.setLayout(new BoxLayout(mid_panel,BoxLayout.Y_AXIS));
 
         //Slang word
         JPanel line1= new JPanel();
+        line1.setOpaque(false);
         JLabel l1 = new JLabel("Slang:");
         l2 = new JLabel(random_slang[0]);
         l2.setForeground(Color.blue);
@@ -52,9 +72,10 @@ public class RandomScreen extends JFrame implements ActionListener {
 
         //Definition panel
         JPanel line2= new JPanel();
+        line2.setOpaque(false);
         JLabel l3 = new JLabel("Defintion:");
         l4 = new JLabel(random_slang[0]);
-        l4.setForeground(Color.gray);
+        l4.setForeground(YELLOW);
         l3.setFont(new Font("Gill Sans MT", Font.PLAIN, 25));
         l4.setFont(new Font("Gill Sans MT", Font.PLAIN, 25));
         line2.add(l3);
@@ -66,6 +87,7 @@ public class RandomScreen extends JFrame implements ActionListener {
 
         //Bottom panel for back and reroll button
         JPanel bottom_panel = new JPanel();
+        bottom_panel.setOpaque(false);
         bottom_panel.setAlignmentX(CENTER_ALIGNMENT);
         B_back = new JButton("Back");
         B_reroll = new JButton("Reroll");

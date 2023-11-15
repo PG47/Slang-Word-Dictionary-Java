@@ -1,9 +1,4 @@
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import static java.awt.Color.*;
+
 public class QuestionScreen extends JFrame implements ActionListener {
     JButton B1,B2,B3,B4;
     JButton B_back;
@@ -23,6 +21,25 @@ public class QuestionScreen extends JFrame implements ActionListener {
     int index=0;
     int Q_type=0;
     int score=0;
+
+    public class GradientPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics graphics) {
+            super.paintComponent(graphics);
+
+            int width = getWidth();
+            int height = getHeight();
+
+            //Define the color radient and its direction
+            Color color1 = BLUE;
+            Color color2 = GREEN;
+            GradientPaint gradient = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+
+            Graphics2D graphics2D = (Graphics2D) graphics;
+            graphics2D.setPaint(gradient);
+            graphics2D.fillRect(0, 0, width, height);
+        }
+    }
 
     QuestionScreen(int type, int num, int scr) {
         Q_type=type;
@@ -33,8 +50,10 @@ public class QuestionScreen extends JFrame implements ActionListener {
         ques = (Slang.getInstance()).Quiz(type);
 
         //Make container
-        Container contain = this.getContentPane();
-        contain.setLayout(new BoxLayout(contain, BoxLayout.Y_AXIS));
+        GradientPanel contain = new GradientPanel();
+        contain.setLayout(new BoxLayout(contain,BoxLayout.Y_AXIS));
+        contain.setPreferredSize(new Dimension(600, 600));
+        setContentPane(contain);
 
         //Make Question title
         JLabel title = new JLabel("Quiz " + Integer.toString(num) +"/10");
@@ -51,6 +70,7 @@ public class QuestionScreen extends JFrame implements ActionListener {
         }
         Question_label.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
         Question_label.setAlignmentX(CENTER_ALIGNMENT);
+        Question_label.setForeground(YELLOW);
 
         //Make answer
         B1 = new JButton("A. "+ques[2]);
@@ -61,6 +81,14 @@ public class QuestionScreen extends JFrame implements ActionListener {
         B2.setFont(new Font("Gill Sans MT", Font.PLAIN, 12));
         B3.setFont(new Font("Gill Sans MT", Font.PLAIN, 12));
         B4.setFont(new Font("Gill Sans MT", Font.PLAIN, 12));
+        B1.setBackground(black);
+        B2.setBackground(black);
+        B3.setBackground(black);
+        B4.setBackground(black);
+        B1.setForeground(white);
+        B2.setForeground(white);
+        B3.setForeground(white);
+        B4.setForeground(white);
         B1.addActionListener(this);
         B2.addActionListener(this);
         B3.addActionListener(this);
@@ -68,6 +96,7 @@ public class QuestionScreen extends JFrame implements ActionListener {
 
         //Make mid panel
         JPanel mid_panel = new JPanel();
+        mid_panel.setOpaque(false);
         mid_panel.setLayout(new GridLayout(2, 2, 10, 10));
         mid_panel.add(B1);
         mid_panel.add(B2);
@@ -76,6 +105,7 @@ public class QuestionScreen extends JFrame implements ActionListener {
 
         //Bottom panel for back and button
         JPanel bottom_panel = new JPanel();
+        bottom_panel.setOpaque(false);
         bottom_panel.setAlignmentX(CENTER_ALIGNMENT);
         B_back = new JButton("Back");
         B_back.addActionListener(this);
@@ -168,7 +198,7 @@ public class QuestionScreen extends JFrame implements ActionListener {
             }
             else {
                 comment = "TRY BETTER NEXT TIME!";
-                StyleConstants.setForeground(line2, Color.gray);
+                StyleConstants.setForeground(line2, Color.black);
             }
             try {
                 doc.insertString(doc.getLength(), comment, line2);

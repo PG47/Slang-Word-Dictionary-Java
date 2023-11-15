@@ -9,6 +9,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import static java.awt.Color.*;
+
 public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSelectionListener{
     JButton B_back, B_search, B_save;
     JTextField text_field, edit_text_field;
@@ -18,11 +20,32 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
     DefaultTableModel model;
     String data[][];
 
+    public class GradientPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics graphics) {
+            super.paintComponent(graphics);
+
+            int width = getWidth();
+            int height = getHeight();
+
+            //Define the color radient and its direction
+            Color color1 = gray;
+            Color color2 = red;
+            GradientPaint gradient = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+
+            Graphics2D graphics2D = (Graphics2D) graphics;
+            graphics2D.setPaint(gradient);
+            graphics2D.fillRect(0, 0, width, height);
+        }
+    }
+
     public  Edit_DeleteScreen() {
         slang_word = Slang.getInstance();
         //Make a container
-        Container contain = this.getContentPane();
-        contain.setLayout(new BoxLayout(contain, BoxLayout.Y_AXIS));
+        GradientPanel contain = new GradientPanel();
+        contain.setLayout(new BoxLayout(contain,BoxLayout.Y_AXIS));
+        contain.setPreferredSize(new Dimension(600, 600));
+        setContentPane(contain);
 
         //Make title
         JLabel title1 = new JLabel("EDIT/DELETE SLANG");
@@ -35,6 +58,7 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
 
         // Make Search text field;
         JPanel text_box = new JPanel();
+        text_box.setOpaque(false);
         text_box.setBackground(Color.gray);
         JLabel info_textbox = new JLabel("Search slang:");
         text_field = new JTextField(20);
@@ -43,10 +67,14 @@ public class Edit_DeleteScreen extends JFrame implements ActionListener, ListSel
         B_search.setMnemonic(KeyEvent.VK_ENTER);
         text_box.setLayout(new BoxLayout(text_box,BoxLayout.Y_AXIS));
         text_box.setLayout(new BoxLayout(text_box,BoxLayout.Y_AXIS));
+
         JPanel line1 = new JPanel();
+        line1.setOpaque(false);
         line1.add(info_textbox);
         line1.add(text_field);
+
         JPanel line2 = new JPanel();
+        line2.setOpaque(false);
         line2.add(B_search);
         text_box.add(line1);
         text_box.add(line2);

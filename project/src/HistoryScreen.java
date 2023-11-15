@@ -1,8 +1,4 @@
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,6 +16,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import static java.awt.Color.*;
+
 
 public class HistoryScreen extends JFrame implements ActionListener{
     JButton B_back;
@@ -27,8 +25,30 @@ public class HistoryScreen extends JFrame implements ActionListener{
     JTable table;
     Slang slang_word;
 
+    public class GradientPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics graphics) {
+            super.paintComponent(graphics);
+
+            int width = getWidth();
+            int height = getHeight();
+
+            //Define the color radient and its direction
+            Color color1 = YELLOW;
+            Color color2 = gray;
+            GradientPaint gradient = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+
+            Graphics2D graphics2D = (Graphics2D) graphics;
+            graphics2D.setPaint(gradient);
+            graphics2D.fillRect(0, 0, width, height);
+        }
+    }
+
     public HistoryScreen() throws Exception {
-        Container contain = this.getContentPane();
+        GradientPanel contain = new GradientPanel();
+        contain.setLayout(new BoxLayout(contain,BoxLayout.Y_AXIS));
+        contain.setPreferredSize(new Dimension(600, 600));
+        setContentPane(contain);
         slang_word = Slang.getInstance();
 
         //make title
@@ -67,6 +87,7 @@ public class HistoryScreen extends JFrame implements ActionListener{
         slang_table.add(scroll);
 
         JPanel bottom_panel = new JPanel();
+        bottom_panel.setOpaque(false);
         // make Back button
         B_back = new JButton("Back");
         B_back.addActionListener(this);

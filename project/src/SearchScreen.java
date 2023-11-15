@@ -1,10 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -24,6 +18,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import static java.awt.Color.*;
+
 public class SearchScreen extends JFrame implements ActionListener {
     JButton B_back;
     JButton B_search;
@@ -33,8 +29,30 @@ public class SearchScreen extends JFrame implements ActionListener {
     Slang slang_word;
     String[][] result_list;
 
+    public class GradientPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics graphics) {
+            super.paintComponent(graphics);
+
+            int width = getWidth();
+            int height = getHeight();
+
+            //Define the color radient and its direction
+            Color color1 = BLUE;
+            Color color2 = YELLOW;
+            GradientPaint gradient = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+
+            Graphics2D graphics2D = (Graphics2D) graphics;
+            graphics2D.setPaint(gradient);
+            graphics2D.fillRect(0, 0, width, height);
+        }
+    }
+
     SearchScreen() throws Exception {
-        Container contain = this.getContentPane();
+        GradientPanel contain = new GradientPanel();
+        contain.setLayout(new BoxLayout(contain,BoxLayout.Y_AXIS));
+        contain.setPreferredSize(new Dimension(600, 600));
+        setContentPane(contain);
         slang_word = Slang.getInstance();
 
         //make title
@@ -50,11 +68,14 @@ public class SearchScreen extends JFrame implements ActionListener {
         info_label.setForeground(Color.green);
         info_label.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
         info_label.setAlignmentX(CENTER_ALIGNMENT);
+        info_label.setOpaque(false);
 
         //make textfield
         JPanel text_box = new JPanel();
+        text_box.setOpaque(false);
         text_box.setBackground(Color.gray);
         JLabel info_textbox = new JLabel("Input keyword:");
+        info_textbox.setForeground(YELLOW);
         text_field = new JTextField(20);
         B_search = new JButton("SEARCH");
         B_search.addActionListener(this);
@@ -62,10 +83,12 @@ public class SearchScreen extends JFrame implements ActionListener {
         text_box.setLayout(new BoxLayout(text_box,BoxLayout.Y_AXIS));
 
         JPanel line1 = new JPanel();
+        line1.setOpaque(false);
         line1.add(info_textbox);
         line1.add(text_field);
 
         JPanel line2 = new JPanel();
+        line2.setOpaque(false);
         line2.add(B_search);
 
         text_box.add(line1);
@@ -99,6 +122,7 @@ public class SearchScreen extends JFrame implements ActionListener {
 
         // make Back button
         JPanel bottom_panel = new JPanel();
+        bottom_panel.setOpaque(false);
         B_back = new JButton("Back");
         B_back.addActionListener(this);
         B_back.setFocusable(false);
