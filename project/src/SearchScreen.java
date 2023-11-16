@@ -13,21 +13,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import static java.awt.Color.*;
 
-public class SearchScreen extends JFrame implements ActionListener {
+public class SearchScreen extends JFrame implements ActionListener, DocumentListener {
     JButton B_back;
-    JButton B_search;
     JTextField text_field;
     JTable result_table;
     JLabel info_label;
     Slang slang_word;
     String[][] result_list;
+
+    Object[] options = { "Search by slang", "Search by definition"};
+    int choice;
 
     public class GradientPanel extends JPanel {
         @Override
@@ -77,9 +79,7 @@ public class SearchScreen extends JFrame implements ActionListener {
         JLabel info_textbox = new JLabel("Input keyword:");
         info_textbox.setForeground(YELLOW);
         text_field = new JTextField(20);
-        B_search = new JButton("SEARCH");
-        B_search.addActionListener(this);
-        B_search.setMnemonic(KeyEvent.VK_ENTER);
+        text_field.getDocument().addDocumentListener(this);
         text_box.setLayout(new BoxLayout(text_box,BoxLayout.Y_AXIS));
 
         JPanel line1 = new JPanel();
@@ -87,12 +87,7 @@ public class SearchScreen extends JFrame implements ActionListener {
         line1.add(info_textbox);
         line1.add(text_field);
 
-        JPanel line2 = new JPanel();
-        line2.setOpaque(false);
-        line2.add(B_search);
-
         text_box.add(line1);
-        text_box.add(line2);
 
         Dimension size = new Dimension(600,80);
         text_box.setMaximumSize(size);
@@ -149,6 +144,10 @@ public class SearchScreen extends JFrame implements ActionListener {
         this.setSize(600, 600);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+
+        choice = JOptionPane.showOptionDialog(this, "Select type of search", "Search type?",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
+        if(choice!=0 && choice !=1) choice=0;
     }
 
     @Override
@@ -158,52 +157,52 @@ public class SearchScreen extends JFrame implements ActionListener {
             this.dispose();
             new MenuScreen();
         }
+    }
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        handleTextChange();
+    }
 
-        if (e.getSource() == B_search) {
-            long run_time=0;
-            String key = text_field.getText();
-            if (key.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Keyword can not empty!", "ERROR",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            Object[] options = { "Search by slang", "Search by definition"};
-            int choice = JOptionPane.showOptionDialog(this, "Select type of search", "Search type?",
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
-            String[][] result  = null;
-            if (choice ==0) { //Search slang word
-                this.clearTable();
-                long start_time = System.currentTimeMillis();
-                result=slang_word.Search_by_Slang(key);
-                long end_time = System.currentTimeMillis();
-                run_time = end_time - start_time;
-            }
-            if (choice ==1) { //Search slang word by definition
-                this.clearTable();
-                long start_time = System.currentTimeMillis();
-                result=slang_word.Search_by_Definition(key);
-                long end_time = System.currentTimeMillis();
-                run_time = end_time - start_time;
-            }
-            if(result!=null) {//found slang words you want
-                info_label.setText("Running time:"+String.valueOf(run_time)+" ms");
-                DefaultTableModel model = (DefaultTableModel) result_table.getModel();
-                for (int i = 0; i < result.length; i++) {
-                    String ss[] = result[i];
-                    model.addRow(ss);
-                }
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        handleTextChange();
+    }
 
-                // Save the result in history
-                try {
-                    for (int ii = 0; ii < result.length; ii++)
-                        slang_word.Save_History(result[ii][0], result[ii][1]);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        handleTextChange();
+    }
 
-            }
-            else JOptionPane.showMessageDialog(this, "Can't find the slang you want", "NO RESULT", JOptionPane.INFORMATION_MESSAGE);
+    private void handleTextChange() {
+        String key = text_field.getText();
+        if (key.isEmpty()) return;
+        String[][] result  = null;
+
+        if (choice ==0) { //Search slang word
+            this.clearTable();
+            result=slang_word.Search_by_Slang(key);
         }
+        if (choice ==1) { //Search slang word by definition
+            this.clearTable();
+            result=slang_word.Search_by_Definition(key);
+        }
+        if(result!=null) {//found slang words you want
+            DefaultTableModel model = (DefaultTableModel) result_table.getModel();
+            for (int i = 0; i < result.length; i++) {
+                String ss[] = result[i];
+                model.addRow(ss);
+            }
+            info_label.setText("Result:"+result.length+" words");
+            // Save the result in history
+            try {
+                for (int ii = 0; ii < result.length; ii++)
+                    slang_word.Save_History(result[ii][0], result[ii][1]);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+
+        }
+        else info_label.setText("No result!");
     }
 
     //Clear the result table if we searching again
